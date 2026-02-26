@@ -1,0 +1,107 @@
+<div class="container">
+  <div class="form-header">
+    <h1>Update Employee</h1>
+  </div>
+
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="isLoading" class="loading">
+    Loading employee data...
+  </div>
+
+  <form *ngIf="!isLoading" [formGroup]="form" (ngSubmit)="submit()" class="form">
+    <div class="form-group">
+      <label for="firstName">First Name *</label>
+      <input
+        type="text"
+        id="firstName"
+        formControlName="firstName"
+        placeholder="Enter first name"
+        [disabled]="isSubmitting"
+      />
+      <div *ngIf="getFieldError('firstName')" class="field-error">
+        {{ getFieldError('firstName') }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Last Name *</label>
+      <input
+        type="text"
+        id="lastName"
+        formControlName="lastName"
+        placeholder="Enter last name"
+        [disabled]="isSubmitting"
+      />
+      <div *ngIf="getFieldError('lastName')" class="field-error">
+        {{ getFieldError('lastName') }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email *</label>
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        placeholder="Enter email"
+        [disabled]="isSubmitting"
+      />
+      <div *ngIf="getFieldError('email')" class="field-error">
+        {{ getFieldError('email') }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="departmentId">Department ID *</label>
+      <input
+        type="number"
+        id="departmentId"
+        formControlName="departmentId"
+        placeholder="Enter department ID"
+        [disabled]="isSubmitting"
+      />
+      <div *ngIf="getFieldError('departmentId')" class="field-error">
+        {{ getFieldError('departmentId') }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="designationId">Designation ID *</label>
+      <input
+        type="number"
+        id="designationId"
+        formControlName="designationId"
+        placeholder="Enter designation ID"
+        [disabled]="isSubmitting"
+      />
+      <div *ngIf="getFieldError('designationId')" class="field-error">
+        {{ getFieldError('designationId') }}
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="isSubmitting || !form.valid"
+      >
+        {{ isSubmitting ? 'Updating...' : 'Update Employee' }}
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="onCancel()"
+        [disabled]="isSubmitting"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

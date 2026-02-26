@@ -1,0 +1,140 @@
+<div class="container">
+  <div class="header">
+    <h1>Employees</h1>
+    <a routerLink="/employees/add" class="btn btn-primary">
+      + Add Employee
+    </a>
+  </div>
+
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+  </div>
+
+  <div class="filter-section">
+    <h3>Search & Filter</h3>
+    <div class="filter-form">
+      <div class="filter-group">
+        <label for="departmentSelect">Filter by Department</label>
+        <select
+          id="departmentSelect"
+          [(ngModel)]="selectedDepartmentId"
+          class="filter-input"
+        >
+          <option [value]="null">All Departments</option>
+          <option *ngFor="let dept of departments" [value]="dept.id">
+            {{ dept.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="searchTerm">Search (ID, Name, Email, Department, Designation)</label>
+        <input
+          id="searchTerm"
+          type="text"
+          [(ngModel)]="searchTerm"
+          placeholder="Enter search term..."
+          class="filter-input"
+        />
+      </div>
+
+      <div class="filter-group">
+        <label for="startDate">From Date</label>
+        <input
+          id="startDate"
+          type="date"
+          [(ngModel)]="startDate"
+          class="filter-input"
+        />
+      </div>
+
+      <div class="filter-group">
+        <label for="endDate">To Date</label>
+        <input
+          id="endDate"
+          type="date"
+          [(ngModel)]="endDate"
+          class="filter-input"
+        />
+      </div>
+
+      <div class="filter-actions">
+        <button (click)="searchEmployees()" class="btn btn-primary">
+          Search
+        </button>
+        <button (click)="clearFilters()" class="btn btn-secondary">
+          Clear Filters
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">
+    Loading...
+  </div>
+
+  <table *ngIf="!isLoading && employees.length > 0" class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Designation</th>
+        <th>Created Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of employees">
+        <td>{{ employee.id }}</td>
+        <td>{{ getFullName(employee) }}</td>
+        <td>{{ employee.departmentName }}</td>
+        <td>{{ employee.designationTitle }}</td>
+        <td>{{ formatDate(employee.createdAt) }}</td>
+        <td class="actions">
+          <a 
+            [routerLink]="['/employees/view', employee.id]" 
+            class="btn btn-small btn-info">
+            View
+          </a>
+          <a 
+            [routerLink]="['/employees/update', employee.id]" 
+            class="btn btn-small btn-warning">
+            Update
+          </a>
+          <button 
+            (click)="deleteEmployee(employee.id)" 
+            class="btn btn-small btn-danger">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!isLoading && employees.length === 0" class="no-data">
+    No employees found
+  </div>
+
+  <div *ngIf="!isLoading && getTotalPages() > 0" class="pagination">
+    <button 
+      (click)="previousPage()" 
+      [disabled]="currentPage === 1"
+      class="btn btn-small">
+      Previous
+    </button>
+    <span class="page-info">
+      Page {{ currentPage }} of {{ getTotalPages() }}
+    </span>
+    <button 
+      (click)="nextPage()" 
+      [disabled]="currentPage === getTotalPages()"
+      class="btn btn-small">
+      Next
+    </button>
+  </div>
+</div>

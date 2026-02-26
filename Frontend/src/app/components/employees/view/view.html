@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="header">
+    <h1>Employee Details</h1>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="isLoading" class="loading">
+    Loading employee details...
+  </div>
+
+  <div *ngIf="!isLoading && employee" class="card">
+    <div class="card-body">
+      <div class="detail-row">
+        <label>ID:</label>
+        <span>{{ employee.id }}</span>
+      </div>
+
+      <div class="detail-row">
+        <label>First Name:</label>
+        <span>{{ employee.firstName }}</span>
+      </div>
+
+      <div class="detail-row">
+        <label>Last Name:</label>
+        <span>{{ employee.lastName }}</span>
+      </div>
+
+      <div class="detail-row">
+        <label>Email:</label>
+        <span>{{ employee.email }}</span>
+      </div>
+
+      <div class="detail-row">
+        <label>Department Id:</label>
+        <span>{{ employee.departmentId }}</span>
+      </div>
+
+      <div class="detail-row">
+        <label>Department Name:</label>
+        <span>{{ employee.departmentName }}</span>
+      </div>
+
+      <div class="detail-row">
+        <label>Designation Id:</label>
+        <span>{{ employee.designationId }}</span>
+      </div>
+
+      <div class="detail-row">
+        <label>Designation Name:</label>
+        <span>{{ employee.designationTitle }}</span>
+      </div>
+    </div>
+
+    <div class="card-actions">
+      <button (click)="edit()" class="btn btn-primary">
+        Edit
+      </button>
+      <button (click)="goBack()" class="btn btn-secondary">
+        Back
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && !employee && !errorMessage" class="no-data">
+    No employee found
+  </div>
+</div>
